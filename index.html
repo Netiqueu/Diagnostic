@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Diagnostic de Peau – Questionnaire</title>
+
+<style>
+/* -------------------------
+   GLOBAL DESIGN RESPONSIVE
+---------------------------*/
+
+body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    margin: 20px;
+    background: #f5f3ee;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 26px;
+    color: #333;
+}
+
+.section {
+    background: white;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    border: 1px solid #e3dfd6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Titres sections */
+h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #5d534a;
+}
+
+/* Labels */
+label {
+    font-weight: 600;
+    margin-top: 12px;
+    display: block;
+}
+
+/* Inputs */
+textarea,
+select,
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #d8d5cf;
+    background: #fafafa;
+    margin-top: 6px;
+    font-size: 15px;
+    resize: none;
+}
+
+/* Textarea pour l’âge */
+.small-textarea {
+    height: 42px !important;
+}
+
+/* Print button */
+.btn-print {
+    width: 100%;
+    padding: 18px 25px;
+    background: #5d534a;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.btn-print:hover {
+    background: #463f39;
+}
+
+/* Responsive iPad Portrait */
+@media (max-width: 820px) {
+    body {
+        margin: 10px;
+    }
+
+    .section {
+        padding: 15px;
+    }
+
+    textarea,
+    select {
+        font-size: 16px;
+    }
+}
+
+
+/* ----------------------------------------
+   🔥 PRINT MODE — VERSION ULTRA CLEAN
+-----------------------------------------*/
+
+@media print {
+
+    body {
+        background: white;
+        margin: 0;
+        padding: 0;
+    }
+
+    .section {
+        border: none !important;
+        box-shadow: none !important;
+        background: white !important;
+        padding: 5px 0 !important;
+        page-break-inside: avoid;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    label {
+        font-size: 14px;
+        margin-top: 6px;
+    }
+
+    textarea,
+    select,
+    input {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        font-size: 14px !important;
+    }
+
+    textarea {
+        height: auto !important;
+    }
+
+    /* Cacher les éléments inutiles */
+    .btn-print {
+        display: none !important;
+    }
+
+    /* Éviter les sauts inutiles */
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+}
+</style>
+
+<script>
+function toggleTextArea(selectId, textId) {
+    const selectEl = document.getElementById(selectId);
+    const textEl = document.getElementById(textId);
+
+    if (selectEl.value === "Oui") {
+        textEl.classList.remove("hidden");
+    } else {
+        textEl.classList.add("hidden");
+    }
+}
+</script>
+
+</head>
+<body>
+
+<h1>Diagnostic de Peau – Questionnaire Complet</h1>
+
+<form id="questionnaire">
+
+<!-- SECTION 1 -->
+<div class="section">
+<h2>1. Informations générales</h2>
+
+<label>1. Quel est votre âge ?</label>
+<textarea class="small-textarea" name="age"></textarea>
+
+<label>2. Avez-vous des antécédents dermatologiques (eczéma, acné, rosacée, allergies…) ?</label>
+<textarea name="antecedents"></textarea>
+
+<label>3. Suivez-vous actuellement un traitement médical ou hormonal ?</label>
+<textarea name="traitement"></textarea>
+
+<label>4. Avez-vous déjà consulté un dermatologue récemment ?</label>
+<select id="dermato_select" name="dermato" onchange="toggleTextArea('dermato_select','dermato_precisions')">
+    <option value="">Sélectionner</option>
+    <option value="Oui">Oui</option>
+    <option value="Non">Non</option>
+</select>
+<textarea id="dermato_precisions" class="hidden" placeholder="Si oui, précisez…"></textarea>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+<h2>2. Ressenti & objectifs</h2>
+
+<label>5. Comment décririez-vous votre peau aujourd’hui ? (sèche, mixte, grasse, sensible…)</label>
+<select name="type_peau">
+    <option value="">Sélectionner</option>
+    <option>Sèche</option>
+    <option>Mixte</option>
+    <option>Grasse</option>
+    <option>Sensible</option>
+    <option>Normale</option>
+</select>
+
+<label>6. Quelles sont vos principales préoccupations ? (rides, taches, pores, imperfections, rougeurs…)</label>
+<textarea name="preoccupations"></textarea>
+
+<label>7. Quel résultat recherchez-vous ? (éclat, anti-âge, pureté, apaisement…)</label>
+<textarea name="objectifs"></textarea>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section">
+<h2>3. Confort & réactions</h2>
+
+<label>8. Votre peau tiraille-t-elle après la douche ou le matin ?</label>
+<select name="tiraillements">
+    <option value="">Sélectionner</option>
+    <option>Jamais</option>
+    <option>Parfois</option>
+    <option>Souvent</option>
+</select>
+
+<label>9. Présentez-vous des rougeurs ? Si oui, à quels moments ?</label>
+<textarea name="rougeurs"></textarea>
+
+<label>10. Votre peau réagit-elle facilement ? (picotements, chaleur, irritations…)</label>
+<select name="reaction">
+    <option value="">Sélectionner</option>
+    <option>Oui</option>
+    <option>Non</option>
+</select>
+
+<label>11. Votre peau brille-t-elle pendant la journée ? Où ?</label>
+<textarea name="brillance"></textarea>
+
+<label>12. Avez-vous les pores visibles ou dilatés ?</label>
+<select name="pores">
+    <option value="">Sélectionner</option>
+    <option>Oui</option>
+    <option>Non</option>
+    <option>Sur certaines zones</option>
+</select>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section">
+<h2>4. Mode de vie</h2>
+
+<label>13. Comment évaluez-vous votre niveau de stress ?</label>
+<select name="stress">
+    <option value="">Sélectionner</option>
+    <option>Faible</option>
+    <option>Moyen</option>
+    <option>Élevé</option>
+</select>
+
+<label>14. Combien de temps dormez-vous par nuit ?</label>
+<input type="number" name="sommeil">
+
+<label>15. Buvez-vous assez d’eau quotidiennement ?</label>
+<select name="eau">
+    <option value="">Sélectionner</option>
+    <option>Oui</option>
+    <option>Non</option>
+    <option>Pas assez</option>
+</select>
+
+<label>16. Votre alimentation est-elle variée ? (sucre, alcool, gras…)</label>
+<textarea name="alimentation"></textarea>
+
+<label>17. Fumez-vous ou êtes-vous exposée à la fumée ?</label>
+<select name="fumeur">
+    <option value="">Sélectionner</option>
+    <option>Non</option>
+    <option>Oui</option>
+    <option>Exposition passive</option>
+</select>
+
+<label>18. Travaillez-vous dans un environnement climatisé ou pollué ?</label>
+<select name="environnement">
+    <option value="">Sélectionner</option>
+    <option>Oui</option>
+    <option>Non</option>
+</select>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section">
+<h2>5. Soleil & protection</h2>
+
+<label>19. Vous exposez-vous souvent au soleil ?</label>
+<select name="soleil">
+    <option value="">Sélectionner</option>
+    <option>Rarement</option>
+    <option>Modérément</option>
+    <option>Fréquemment</option>
+</select>
+
+<label>20. Utilisez-vous une protection solaire ? Si oui, laquelle et à quelle fréquence ?</label>
+<textarea name="spf"></textarea>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section">
+<h2>6. QUESTIONS SPÉCIALES : ROUTINE SKINCARE</h2>
+
+<label>21. Quels produits utilisez-vous pour nettoyer votre peau ? (gel, lait, eau micellaire…)</label>
+<textarea name="nettoyants"></textarea>
+
+<label>22. À quelle fréquence nettoyez-vous votre peau ? (matin, soir, les deux)</label>
+<select name="freq_nettoyage">
+    <option value="">Sélectionner</option>
+    <option>Matin</option>
+    <option>Soir</option>
+    <option>Les deux</option>
+</select>
+
+<label>23. Utilisez-vous un exfoliant ? À quelle fréquence ?</label>
+<textarea name="exfoliant"></textarea>
+
+<label>24. Appliquez-vous un tonique ou une lotion après le nettoyage ?</label>
+<select name="tonique">
+    <option value="">Sélectionner</option>
+    <option>Oui</option>
+    <option>Non</option>
+</select>
+
+<label>25. Utilisez-vous un sérum ? Si oui, lequel ?</label>
+<textarea name="serum"></textarea>
+
+<label>26. Quelle crème hydratante utilisez-vous ?</label>
+<textarea name="creme"></textarea>
+
+<label>27. Utilisez-vous un contour des yeux ?</label>
+<select name="yeux">
+    <option value="">Sélectionner</option>
+    <option>Oui</option>
+    <option>Non</option>
+</select>
+
+<label>28. Faites-vous des masques ? À quelle fréquence ?</label>
+<textarea name="masques"></textarea>
+
+<label>29. Utilisez-vous des outils comme le gua sha, rollers, brosse nettoyante, lumière LED… ?</label>
+<textarea name="outils"></textarea>
+
+<label>30. À quel moment appliquez-vous vos produits : matin, soir, les deux ?</label>
+<select name="moment">
+    <option value="">Sélectionner</option>
+    <option>Matin</option>
+    <option>Soir</option>
+    <option>Les deux</option>
+</select>
+</div>
+
+</form>
+
+<button class="btn-print" onclick="window.print()">🖨️ Imprimer le PDF propre</button>
+
+</body>
+</html>
